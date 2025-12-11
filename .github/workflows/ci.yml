@@ -5,33 +5,33 @@ on:
     branches: [ "main" ]
 
 jobs:
-  build and scan:
-      runs-on: ubuntu-latest
+  build:
+    runs-on: ubuntu-latest
 
-        steps:
-          - name: Checkout code
-            uses: actions/checkout@v3
-    
-          - name: Setup Node.js
-            uses: actions/setup-node@v3
-            with:
-              node-version: "18"
-    
-          - name: Install dependencies
-            run: npm install
-            working-directory: ./app
-    
-          - name: Run tests
-            run: npm test --if-present
-            working-directory: ./app
-    
-          - name: Build Docker image
-            run: docker build -t myapp:latest .
-            working-directory: ./app     # 🔥 IMPORTANT
-    
-          - name: Scan image with Trivy
-            uses: aquasecurity/trivy-action@master
-            with:
-              image-ref: myapp:latest
-              severity: CRITICAL,HIGH
-              exit-code: 1
+    steps:
+        - name: Checkout code
+          uses: actions/checkout@v3
+  
+        - name: Setup Node.js
+          uses: actions/setup-node@v3
+          with:
+            node-version: "18"
+  
+        - name: Install dependencies
+          run: npm install
+          working-directory: ./app
+  
+        - name: Run tests
+          run: npm test --if-present
+          working-directory: ./app
+  
+        - name: Build Docker image
+          run: docker build -t myapp:latest .
+          working-directory: ./app     # 🔥 IMPORTANT
+  
+        - name: Scan image with Trivy
+          uses: aquasecurity/trivy-action@master
+          with:
+            image-ref: myapp:latest
+            severity: CRITICAL,HIGH
+            exit-code: 1
