@@ -26,9 +26,9 @@ jobs:
         run: npm test --if-present
         working-directory: ./app
 
-      - name: Build docker image
+      - name: Build Docker image
         run: docker build -t myapp:latest .
-        working-directory: ./app
+        working-directory: ./app     # 🔥 IMPORTANT
 
       - name: Scan image with Trivy
         uses: aquasecurity/trivy-action@master
